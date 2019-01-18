@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Linking Assets-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!--Linking JavaScript-->
+    <link type="text/javascript" src="app.js">
+    <!--Linking Boootstrap and jQuery-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <title>Trivia Game</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <img src="assets/images/office-main.png" alt="office crew" style="width:1300px;height:500px;" id="main">
+            <h1 class="title"> The Office Trivia</h1><br />
+            <hr />
+            <div id="instructions">
+                <ul>
+                    <li>You have 120 seconds to answer 5 multiple choice questions</li>
+                    <li>You only get to choose one answer per question</li>
+                    <li>Once you get done with answering all 5 questions you can click the submit button </li>
+                    <li> If you run out of time it will only count the ones you have</li>
+                    <li>At the end of the game it will show the correct answers to each question</li>
+                </ul>
+                Once you are ready click the Start Game button to test your true fan skills about The Office.<br><br>
+            </div><br>
+            <div>
+                <button id="start" class="btn btn-info btn-lg"> Start Game</button><br>
+                <div id="timeLeft">Time Left:<span id="display"></span></div>
+            </div>
+        </div>
+        <!--Quiz id's-->
+        <div id="allQuestions"></div>
+        <div id="question"></div>
+        <div id="pickFrom"></div>
+        <!--Correct and Incorect id's-->
+        <div id="correctAnswers"></div>
+        <div id="incorrectAnswers"></div>
+        <div id="unAnwsered"></div>
+        <div id="results"></div><br>
+        <div id="trivia">
+            <div>
+                <div id="questions"></div>
+                <img src="assets/images/fireguy.png" alt="office fire guy" style="width:300px;height:300px;" class="images">
+                <div class="h3">
+                    <h3>Ryan</h3>
+                </div>
+            </div><br>
+            <div>
+
+                <img src="assets/images/grill.jpg" alt="office burned foot foreman grill" style="width:300px;height:300px"
+                    class="images">
+                <div class="h3">
+                    <h3>Micahel</h3>
+                </div>
+            </div><br>
+
+            <img src="assets/images/onlinedating.jpg" alt="office michael online dating name" style="width:300px; height:300px;"
+                class="images">
+            <div class="h3">
+                <h3>Little Kid Lover</h3>
+            </div>
+            <div><br>
+
+                <img src="assets/images/henryetta.jpg" alt="office dwight and Porrcipine" style="width:300px; height:300px;"
+                    class="images">
+                <div class="h3">
+                    <h3>Hennreyetta </h3>
+                </div>
+            </div><br>
+            <div>
+
+                <img src="assets/images/scarecrow.jpg" alt="office michaels Scarecrow" style="width:300px; height:300px;"
+                    class="images">
+                <div class="h3">
+                    <h3>A Scarecrow</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="">
+        <input type="submit" value="Submit" id="submit">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script>
+        // Questions 1-5, Choices to choose from, Answer to the question
+        var quiz = [
+            {
+                questions: "Who started the fire with the toaster/oven?",
+                choices: [
+                    "a: Ryan",
+                    "b: Dwight",
+                    "c: Creed",
+                    "d: Pam",
+                ],
+                answer: "a: Ryan"
+            }, {
+                questions: "Who burned their foot with a foreman grill?",
+                choices: [
+                    "a: Jim",
+                    "b: Dwight",
+                    "c: Michael",
+                    "d: Andy",
+                ],
+                answer: "c: Michaell"
+            }, {
+                questions: "What is Michaels user name for his online dating profile?",
+                choices: [
+                    "a: Best-Boss",
+                    "b: Little Kid Lover",
+                    "c: Michael",
+                    "d: Family Man",
+                ],
+                answer: "b: Little Kid Lover"
+            }, {
+                questions: "What is the name of Dwights porcipine in his prank with Jim?",
+                choices: [
+                    "a: Robert",
+                    "b: Pinney",
+                    "c: Philip",
+                    "d: Henryetta",
+                ],
+                answer: "d: Henryetta"
+            }, {
+                questions: "What does Michael give Oscar for his going away gift?",
+                choices: [
+                    "a: Car",
+                    "b: His Clients",
+                    "c: Scarecrow",
+                    "d: Best Boss Cup",
+                ],
+                answer: "c: Scarecrow"
+            }];
+        // Variables for Game
+        var trivia;
+        var timer = 10;
+        var correct = 0;
+        var incorrect = 0;
+        var unAnswered = 0;
+        var timerUp;
+        var choices = "";
+        var allQuestion;
+        var userAnswer;
+        $(document).ready(function () {
+            $("#trivia").hide();
+            $("#timeLeft").hide();
+            $("#submit").hide();
+
+            $("#start").on("click", function () {
+                startGame();
+                startTimer();
+                Questions();
+
+
+            });
+            function startGame() {
+                // Start Game starts everything fresh
+                // jumbotron info
+                $("#instructions").hide();
+                $("#trivia").show();
+                $("#timeLeft").show();
+                $(".images").hide();
+                $(".h3").hide();
+                $("#start").hide();
+                $("#submit").show();
+
+                // quiz area
+                $("#correctAnswers").empty();
+                $("#incorrectAnswers").empty();
+                $("#unanswered").empty();
+                correct = 0;
+                incorrect = 0;
+                unanswered = 0;
+            };
+
+            // Timer for starting the game
+            function startTimer() {
+                $("#display").text(timer);
+                setInterval(countDown, 1000)
+
+            };
+            function countDown() {
+                timer--;
+                $("#display").text(timer);
+                if (timer === 0) {
+                    alert("Time's Up! ");
+                    endTimer();
+                    $("#timeLeft").empty();
+                }
+
+            };
+            function endTimer() {
+                clearTimeout();
+                endGame();
+                // eachClick();
+            };
+            function submit() {
+                $("#submit").on("click", function () {
+                    endGame();
+                    Answers();
+                    endTimer();
+                    // eachClick();
+                })
+            }
+
+            function endGame() {
+                // End Game shows results and Images
+                $("#timeLeft").empty();
+                $(".images").show();
+                $(".h3").show();
+                countDown();
+                eachClick();
+            };
+
+            function eachClick() {
+
+
+                for (var i = 0; i < quiz.length; i++) {
+                    var rightAnswer = quiz[i].correct;
+                    // var theirAnswer = "Ryan"
+                    // var theirAnswer = $("input[name='question-0']:checked").val();
+                    var theirAnswer = $("input:radio[name='question-" + i + "']:checked").val();
+
+                    if (!theirAnswer) {
+                        unanswered++;
+
+                    } else if (theirAnswer === quiz[i].answer) {
+                        correct++;
+                        console.log("right")
+                    }
+                    else {
+                        incorrect++;
+                        console.log("wrong")
+                    }
+                }
+
+                // // loop through correctArray & radioName to match html elements & answers
+                //         for (var i = 0; i < quiz.length; i++) {
+
+                //         if ($('input:radio[name="' + questions[i].name + '"]:checked').val() === questions[i].correct) {
+
+                //             correctAnswers++;
+                //         } else {
+                //             wrongAnswers++;
+                //         };
+                //         };
+
+                console.log (quiz[0].answer)
+                console.log($("input:radio[name='question-" + i + "']:checked"))
+
+                console.log(correct);
+                console.log(incorrect);
+                console.log(unAnswered);
+
+
+                $("#results").html(`
+                <div>
+                    <h3>Correct: ${correct}</h3>
+                    <h3>Incorrect: ${incorrect} </h3>
+                    <h3>Not Answered: ${unanswered}</h3> 
+                </div>
+                `);
+            }
+
+               
+            
+
+            // This will be the content of the game Answers and Questions
+            //Questions and Answer
+            function Questions() {
+                // to show Questions
+                for (var i = 0; i < quiz.length; i++) {
+                    $("#questions").append("<h2>" + quiz[i].questions + "</h2>");
+                    //to show answers
+                    for (var j = 0; j < quiz[i].choices.length; j++) {
+                        $("#questions").append("<label><input type='radio' name='question-" + i + "' value='" +
+                            quiz[i].choices[j] + "'>" + quiz[i].choices[j] + " <label> <br>");
+                    }
+                }
+            }
+
+
+            // function eachClick() {
+            //     correct = 0;
+            //     incorrect = 0;
+            //     unanswered = 0;
+                
+            //     console.log(correct);
+            //     console.log(incorrect);
+            //     console.log(unAnswered);
+
+               
+            //     $.each($("input[name='question-0']:checked"), function () {
+            //         if ($(this).val() === quiz[0].correct) {
+            //             correct++;
+
+            //             if (!theirAnswer) {
+            //                 unanswered++;
+            //             } else if (theirAnswer === rightAnswer) {
+            //                 correct++;
+            //                 console.log(correct);
+            //             }
+            //             else {
+            //                 incorrect++;
+            //                 console.log(incorrect);
+            //             }
+            //         }
+            //     })
+
+            //     $("#results").html(`
+            //     <div>
+            //         <h3>Correct: ${correct}</h3>
+            //         <h3>Incorrect: ${incorrect} </h3>
+            //         <h3>Not Answered: ${unanswered}</h3> 
+            //     </div>
+            //     `);
+            // }
+                
+
+
+
+                //         $.each($("input[name='question-0']:checked"), function () {
+                //             if ($(this.val() === quiz[0].correct){
+                //                 correct++;
+                //             }
+                //             else if{
+                //                 incorrect++;
+                //         },   
+                //             else {
+                //                 unAnswered++;
+                //     }
+                // })
+                //     }
+
+
+
+                //***************************************************
+                //*******fucunction for each of the users picks******
+                //***************************************************
+                //
+
+                // use $.each() to get the question input *Hint: "input[name='question-0']:checked"*
+                // use if ($(this.val() to check with the correct answer in our array
+                // increase correct score
+
+                //else increase uses score 
+
+                // *hint you can put the above function in a loop or write it out for each question 
+                //Dont forget to call this function when the time runs out
+
+
+                //***************************************************
+                //*********On click submit button function**********
+                //***************************************************
+                // setting timer to 0 should trigger the display users awnsers
+
+
+                //***************************************************
+                //****************End Screen************************
+                //***************************************************
+                // youll need to push the correct and incorrect answers to thir array
+                //you'll need to show and hide the divs for the users correct and wrong awnsers (see note under the timer function)
+            })
+    </script>
+</body>
+
+</html>
