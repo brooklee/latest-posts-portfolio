@@ -10,7 +10,8 @@ var dribbbleAccessToken = '1ca8ee77f40167f36538dd41f2e34c4ee07e4122f5cdfd79b2874
 function mountHtml(data) {
   $.each(data, function(index, value) {
     var project = value.name
-    var cover = value.covers[202];
+    var cover = value.covers.original;
+    // var cover = value.covers.[202];
     var projectItem = `<li>
       <a href=${value.url} target="_blank">
       <img class="be-projects" src=${cover}>
