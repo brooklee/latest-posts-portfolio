@@ -17,24 +17,75 @@ a {
   }
 
 h1{
-    font-size:2rem
+    font-size:2rem;
+    margin-bottom: 20px;
 }
 h2{
     font-size:1.5rem
 }
 p{
-    font-size:16 px;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 20px;
 }
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color:  rgba(0, 0, 0, 0.3) transparent transparent transparent;
+
+  }
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
 .hero{
-    height: 920px;
-    background-image: url(images/Herop-BG.jpg)
+    min-height: 920px;
+    background-image: url(images/Herop-BG2.jpg)
 }
 .hero h1{
     color: rgba(255,255,255, 0.8)
 }
+.hero h2{
+    color: rgba(255,255,255, 0.8)
+}
 .hero p {
     color: rgba(255,255,255, 0.9)
+}
+.hero-intro{
+    padding: 0 15%;
+    align-items: center;
+}
+
+.follow-me{
+    margin-right: 10px;
 }
 
 .hero-profile-img{
@@ -46,6 +97,7 @@ p{
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
   }
 
   .white-bottom-border {
@@ -55,45 +107,62 @@ p{
     width:100%;
   }
 
-[data-projects]{
+  .resource-title{
+    position:relative;
+    display:inline-block;
+    margin:1em;
+    font-size: 28px;
+    background: -webkit-linear-gradient(rgb(255, 0, 0), rgb(79, 5, 122));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+[data-be-projects]{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
     padding:0;
 }
-[data-projects] li{
+[data-be-projects] li{
     position:relative;
     display:inline-block;
     margin:1em;
     border-radius:3px;
     overflow:hidden;
     transition:all linear .3s;
-    border-radius: 20px;
+    border-radius: 0px;
     z-index:0;
 }
-[data-projects] li:hover{
-    box-shadow:0 0 18px rgba(63, 1, 78, 0.3);
-    border-radius: 20px;
-}
-[data-projects] li:hover .cover-details{
-    opacity:1;
-    border-radius: 20px;
-}
-[data-projects] li:hover img{
+[data-be-projects] li:hover{
     transform:scale(1.1);
-    border-radius: 20px;
+    border-radius: 0px;
+    -moz-box-shadow:    3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.3);
    
 }
-[data-projects] img{
+
+/* [data-be-projects] li:hover .cover-details{
+    opacity:1;
+    border-radius: 0px;
+} */
+[data-be-projects] img:hover {
+    transform:scale(1.1);
+    border-radius: 0px;
+    -moz-box-shadow:    3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+   
+}
+[data-be-projects] img{
     display:block;
-    width:100%;
-    max-width:100%;
+    width:400px;
     box-sizing:border-box;
     transition:all ease .4s;
-    border-radius: 20px;
+    border-radius: 0px;
 
 }
-[data-projects] .cover-details{
+[data-be-projects] .cover-details{
     color:#fff;
     display:flex;
     flex-direction:column;
@@ -110,13 +179,46 @@ p{
     transition:all linear .2s;
     text-align:center
 }
-[data-projects] .project-title{
+[data-be-projects] .project-title{
     font-weight:600;
     color: rgba(255,255,255, 0.8);
 }
 
-[data-projects] .project-labels{
+[data-be-projects] .project-labels{
     font-size:14px;
     color: rgba(255,255,255, 0.8);
 }
 
+#shots{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:0;
+}
+.img-shot {
+    width: 400px;
+    height: auto;
+    position:relative;
+    display:inline-block;
+    margin:1em;
+}
+
+.img-shot:hover {
+    transition:all ease .4s;
+    transform:scale(1.1);
+    border-radius: 0px;
+    -moz-box-shadow:    3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+    box-shadow:         3px 3px 5px 6px rgba(0, 0, 0, 0.3);
+}
+
+footer{
+    background-color: rgba(0, 0, 0, 0.8)
+}
+.footer-info{
+    position:relative;
+    display:inline-block;
+    margin:1em;
+    font-size: 12px;
+    color: #fff;
+}

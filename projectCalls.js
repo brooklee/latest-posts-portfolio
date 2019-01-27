@@ -5,16 +5,17 @@ var user= 'brookleewilson',
 // Dribbble access token
 var dribbbleAccessToken = '1ca8ee77f40167f36538dd41f2e34c4ee07e4122f5cdfd79b2874342bb0f843b';
 
+//behance api calls=======================
     var data = [],
-    list = $('[data-projects]')
+    list = $('[data-be-projects]')
 function mountHtml(data) {
   $.each(data, function(index, value) {
     var project = value.name
     var cover = value.covers.original;
     // var cover = value.covers.[202];
-    var projectItem = `<li>
+    var projectItem = `<li class="be-project">
       <a href=${value.url} target="_blank">
-      <img class="be-projects" src=${cover}>
+      <img src=${cover}>
       <div class="cover-details">
         <span class="project-title">${project}</span>
         <span class="project-labels">${value.fields}</span>
@@ -70,7 +71,7 @@ if (typeof(Storage) !== "undefined") {
   // Sorry! No Web Storage support..
   fetchData()
 }
-// Dribbble
+// Dribbble=========================================
 $.ajax({
   url: 'https://api.dribbble.com/v2/user/shots?access_token='+dribbbleAccessToken,
   dataType: 'json',
@@ -79,7 +80,7 @@ $.ajax({
     if (data.length > 0) { 
       $.each(data.reverse(), function(i, val) {                
         $('#shots').prepend(
-          '<a class="shot" target="_blank" href="'+ val.html_url +'" title="' + val.title + '"><div class="title">' + val.title + '</div><img src="'+ val.images.hidpi +'"/></a>'
+          '<a class="shot" target="_blank" href="'+ val.html_url +'" title="' + val.title + '"><img class="img-shot" src="'+ val.images.hidpi +'"/></a>'
           )
       })
     }
@@ -87,4 +88,4 @@ $.ajax({
       $('#shots').append('<p>No shots yet!</p>');
     }
   }
-});
+});// Dribbble End=========================================
