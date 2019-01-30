@@ -107,3 +107,38 @@ $.getJSON("https://cpv2api.com/pens/public/brooklee", function(resp){
       $('#pens').append('<p>No pens yet!</p>');
     }
 });
+
+
+// CodeSandbox.io
+
+// $.getJSON("https://codesandbox.io/api/v1/users/brooklee1/sandboxes", function(resp){
+//   if(resp){
+//     console.log(resp);
+
+//       $.each(resp, function(i, val) { 
+//         console.log(val.id);               
+//         $('#sandboxes').prepend(
+//           // '<a class="shot" target="_blank" href="https://codesandbox.io/s/'+ val.id +'" title="' + val.title + '"><img class="img-shot" src="https://screenshots.codesandbox.io/'+ val.id +'.png"/></a>'
+//           '<p>' + val.id + '</p>'
+//           )
+//       })
+//     }
+//     else {
+//       $('#sandboxes').append('<p>No Sandboxes yet!</p>');
+//     }
+// });
+
+$.ajax({
+  dataType: "jsonp",
+  url: 'https://codesandbox.io/api/v1/users/brooklee1/sandboxes',
+  data: data,
+  // success: success
+  }
+)
+  .done(function( data ) {
+      console.log("done");
+  })
+  .fail( function(err) {
+      console.log(err);
+  });
+
