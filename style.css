@@ -110,7 +110,6 @@ p{
   .resource-title{
     position:relative;
     display:inline-block;
-    margin:1em;
     font-size: 28px;
     background: -webkit-linear-gradient(rgb(255, 0, 0), rgb(79, 5, 122));
     -webkit-background-clip: text;

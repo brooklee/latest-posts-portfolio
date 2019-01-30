@@ -11,9 +11,9 @@ var dribbbleAccessToken = '1ca8ee77f40167f36538dd41f2e34c4ee07e4122f5cdfd79b2874
 function mountHtml(data) {
   $.each(data, function(index, value) {
     var project = value.name
-    var cover = value.covers.original;
+    var cover = value.covers[404];
     // var cover = value.covers.[202];
-    var projectItem = `<li class="be-project">
+    var projectItem = `<div><li class="be-project">
       <a href=${value.url} target="_blank">
       <img src=${cover}>
       <div class="cover-details">
@@ -21,7 +21,7 @@ function mountHtml(data) {
         <span class="project-labels">${value.fields}</span>
       </div>
       </a>
-    </li>`;
+    </li></div>`;
     list.append( projectItem )
   });
 }
@@ -89,3 +89,21 @@ $.ajax({
     }
   }
 });// Dribbble End=========================================
+
+// CodePen pens
+https://cpv2api.com/pens/public/brooklee
+
+$.getJSON("https://cpv2api.com/pens/public/brooklee", function(resp){
+  if(resp.success){
+    console.log(resp.data);
+
+      $.each(resp.data, function(i, val) {                
+        $('#pens').prepend(
+          '<a class="shot" target="_blank" href="'+val.link +'" title="' + val.title + '"><img class="img-shot" src="'+ val.images.small +'"/></a>'
+          )
+      })
+    }
+    else {
+      $('#pens').append('<p>No pens yet!</p>');
+    }
+});
